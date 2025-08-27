@@ -1,0 +1,743 @@
+
+* { box-sizing: border-box; }
+:root {
+  --bg: #ffffff;
+  --ink: #0b0b0f;
+  --muted: #5d5f6d;
+  --brand: #0b0b0f;
+  --accent: #3a86ff;
+}
+html, body { margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); }
+img { max-width: 100%; display: block; }
+.container { width: min(1100px, 92vw); margin: 0 auto; }
+
+/* Loader */
+ #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #loader video {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+      background: transparent;
+    }
+    #content {
+      display: none;
+      animation: fadeIn 1s ease-in forwards;
+    }
+ @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+/* Header */
+.site-header { position: sticky; top: 0; background: rgba(255,255,255,.8); backdrop-filter: blur(8px); border-bottom: 1px solid #eee; z-index: 10; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; font-weight: 700; }
+.brand img { width: 36px; height: 36px; object-fit: contain; }
+.brand-text { font-size: 18px; }
+nav a { margin-left: 18px; text-decoration: none; color: var(--ink); font-weight: 500; }
+nav a.btn { padding: 10px 16px; background: var(--ink); color: white; border-radius: 10px; }
+nav a.btn:hover { opacity: 0.9; }
+
+/* Hero */
+.hero { padding: 72px 0 40px; }
+.hero-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center; }
+.eyebrow { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
+.hero h1 { font-size: clamp(28px, 3.6vw, 56px); line-height: 1.05; margin: 10px 0 18px; }
+.hero .accent { color: grey; }
+.cta { display: flex; gap: 12px; }
+.btn { display: inline-block; padding: 12px 16px; border-radius: 12px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 600; }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.hero-art { height: 360px; border-radius: 24px; background: radial-gradient(120% 120% at 10% 10%, #f0f4ff, transparent), conic-gradient(from 180deg at 50% 50%, #e6edff, #f7f9ff, #e9f2ff, #e6edff); box-shadow: 0 10px 40px rgba(0,0,0,.08) inset; }
+
+/* Services cards */
+.services { padding: 48px 0; }
+.services h2 { font-size: 32px; margin: 0 0 18px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { border: 1px solid #eee; border-radius: 16px; padding: 12px; background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.04); }
+.card h3 { margin: 10px 0 6px; }
+.card p { color: var(--muted); }
+.card .price { margin-top: 8px; font-weight: 700; }
+
+/* Deep services */
+.deep-services { padding: 48px 0 24px; background: #fafbff; }
+.deep-services h2 { text-align: center; margin-bottom: 16px; }
+.deep-services .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.deep-services article { background: white; border: 1px solid #eee; border-radius: 16px; padding: 18px; }
+
+/* Team */
+.team { padding: 48px 0; }
+.team h2 { margin-bottom: 18px; }
+.profiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.avatar { height: 120px; border-radius: 100px; background: linear-gradient(180deg, #e9f0ff, #f7f9ff); border: 1px solid #e3e7ff; }
+
+/* CTA wide */
+.cta-wide { padding: 36px 0; background: #0b0b0f; color: white; text-align: center; }
+.cta-wide .btn { background: white; color: var(--ink); margin-top: 12px; }
+
+/* Contact */
+.contact { padding: 48px 0; }
+.contact-form { display: grid; gap: 12px; max-width: 640px; }
+.contact-form input, .contact-form textarea { padding: 12px 14px; border-radius: 12px; border: 1px solid #ddd; font: inherit; }
+
+/* Footer */
+.site-footer { padding: 28px 0; border-top: 1px solid #eee; }
+.footer-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; }
+.footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.footer-brand img { width: 30px; height: 30px; }
+.cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cols h4 { margin: 0 0 10px; }
+.cols ul { list-style: none; padding: 0; margin: 0; color: var(--muted); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .cards, .deep-services .grid, .profiles, .cols { grid-template-columns: 1fr; }
+  nav a { margin-left: 12px; }
+}
+/* === Existing styles above this line === */
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.reveal {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  visibility: visible;
+  animation: fadeUp 0.9s ease forwards;
+}
+
+.hero .hero-copy.reveal.visible {
+  animation: fadeIn 1s ease forwards;
+}
+
+.hero .hero-art.reveal.visible {
+  animation: scaleIn 1s ease forwards;
+}
+/* Fullpage layout */
+html, body {
+  height: 100%;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+main > section,
+#team,
+.contact,
+.cta-wide {
+  min-height: 100vh;              /* each fills the viewport */
+  /* snap at top */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* Base reveal */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(80px) scale(0.95);
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Extra "crazy" layered animations */
+.hero .hero-copy.visible {
+  animation: heroSlide 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero .hero-art.visible {
+  animation: heroZoom 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroSlide {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroZoom {
+  from { opacity: 0; transform: scale(0.85) rotate(-3deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+/* From Uiverse.io by vinodjangid07 */ 
+.Btn-Container {
+  display: flex;
+  width: 170px;
+  height: fit-content;
+  background-color: #1d2129;
+  border-radius: 40px;
+  box-shadow: 0px 5px 10px #bebebe;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+.icon-Container {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid #1d2129;
+}
+.text {
+  width: calc(170px - 45px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1em;
+  letter-spacing: 1.2px;
+}
+.icon-Container svg {
+  transition-duration: 1.5s;
+}
+.Btn-Container:hover .icon-Container svg {
+  transition-duration: 1.5s;
+  animation: arrow 1s linear infinite;
+}
+@keyframes arrow {
+  0% {
+    opacity: 0;
+    margin-left: 0px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 10px;
+  }
+}
+/* === Scroll-to-top button === */
+.button.scroll-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,.18);
+  transition: transform .25s ease, opacity .25s ease, visibility .25s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(.98);
+  z-index: 1000; /* above site header/content, under loader (9999) */
+}
+
+.button.scroll-top .svgIcon {
+  width: 22px;
+  height: 22px;
+  fill: #fff;
+}
+
+.button.scroll-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.button.scroll-top:hover { transform: translateY(0) scale(1.04); }
+@media (prefers-reduced-motion: reduce) {
+  .button.scroll-top { transition: none; }
+}
+
+/* From Uiverse.io by vinodjangid07 */ 
+.back_to_top {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.back_to_top:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: black;
+  align-items: center;
+}
+
+.back_to_top:hover .svgIcon {
+  /* width: 20px; */
+  transition-duration: 0.3s;
+  transform: translateY(-200%);
+}
+
+.back_to_top::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Back to Top";
+  color: white;
+  /* transition-duration: .3s; */
+  font-size: 0px;
+}
+
+.back_to_top:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+  /* transform: translateY(-30px); */
+  transition-duration: 0.3s;
+}
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.scroll-top.hide {
+  display: none;
+}
+/* Scroll-to-top base */
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ink, #000);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+/* Hidden state */
+.scroll-top.hide {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+/* From Uiverse.io by vinodjangid07 */
+.button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.button:hover {
+  width: 140px;
+  border-radius: 50px;
+  background-color: black;
+}
+
+.button:hover .svgIcon {
+  transform: translateY(-200%);
+}
+
+.button::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Back to Top";
+  color: white;
+  font-size: 0px;
+}
+
+.button:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+  transition-duration: 0.3s;
+}
+
+/* Hide class for scroll logic */
+.button.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.team {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.team h2 {
+  margin-bottom: 40px;
+  font-size: 32px;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.team-carousel {
+  display: flex;
+  gap: 30px;
+  transition: transform 0.4s ease;
+  touch-action: pan-y;
+}
+
+.team-card {
+  flex: 0 0 250px; /* card width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #eee;
+  transition: transform 0.3s ease;
+}
+
+.team-card h3 {
+  margin: 0 0 5px;
+}
+
+.team-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.team-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Carousel arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 24px;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.carousel-arrow:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.carousel-arrow.left {
+  left: 10px;
+}
+
+.carousel-arrow.right {
+  right: 10px;
+}
+
+/* Carousel dots */
+.carousel-dots {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.carousel-dots button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: #bbb;
+  cursor: pointer;
+}
+
+.carousel-dots button.active {
+  background: #333;
+}
+.team-carousel {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.4s ease;
+  touch-action: pan-y;
+}
+
+.team-card {
+  flex: 0 0 250px; /* default card width */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Responsive card widths */
+@media (max-width: 1200px) {
+  .team-card { flex: 0 0 220px; }
+}
+
+@media (max-width: 900px) {
+  .team-card { flex: 0 0 180px; }
+}
+
+@media (max-width: 600px) {
+  .team-card { flex: 0 0 80%; } /* show 1 card roughly */
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 2rem;
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 0 0 0 12px;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+/* Default nav (desktop) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 1000;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.hamburger {
+  display: none;
+  font-size: 28px;
+  color: black;
+  cursor: pointer;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: rgba(252, 251, 251, 0.95);
+    border-radius: 10px;
+    padding: 15px 30px;
+    width: 200px;
+    text-align: left;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+
+/* Added by fix: disable snap-scrolling and ensure sections can grow on mobile */
+@media (max-width: 768px) {
+  main > section, #team, .contact, .cta-wide {
+    min-height: auto;
+  }
+  html, body {
+    overflow-y: auto;
+  }
+}
+/* From Uiverse.io by adamgiebl */ 
+.cssbuttons-io-button {
+  background: black;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: black;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+.cssbuttons-io-button {
+  text-decoration: none;   /* remove underline for links */
+  display: inline-flex;    /* works the same for <a> */
+  justify-content: center;
+  margin-top: 12px;        /* space it nicely under text */
+}
