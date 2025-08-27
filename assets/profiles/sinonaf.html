@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinonaf Teshome — Terminal Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #300a24; /* Ubuntu terminal purple */
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #terminal {
+      width: 90%;
+      max-width: 1000px;
+      height: 90%;
+      background: #2c001e; /* Ubuntu CLI background */
+      border-radius: 6px;
+      padding: 1rem;
+      overflow-y: auto;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .line {
+      margin: 0.2rem 0;
+      white-space: pre-wrap;
+    }
+
+    .prompt {
+      color: #87ff00; /* Ubuntu green prompt */
+    }
+
+    .cmd {
+      color: #268bd2; /* Correct commands in Ubuntu blue */
+    }
+
+    .output {
+      color: #ffffff; /* Output always white */
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font: inherit;
+      width: 70%;
+    }
+
+    img.profile {
+      max-width: 120px;
+      border-radius: 50%;
+      margin: 10px 0;
+      border: 2px solid #fff;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+
+    const commands = {
+      help: `Available commands:
+  - help         Show this help message
+  - about        About me
+  - skills       List of skills
+  - achievements My achievements
+  - contact      How to reach me
+  - gui          Open GUI portfolio
+  - clear        Clear the terminal`,
+
+      about: `Hello, I'm Sinonaf Teshome.
+A developer passionate about Linux, programming, and cybersecurity.
+I enjoy working with HTML, CSS, JavaScript, Python, and Bash.
+I actively play TryHackMe (THM) and love problem-solving.`,
+
+      skills: `Skills:
+  - HTML, CSS, JavaScript
+  - Python, Bash
+  - Linux
+  - Cybersecurity (TryHackMe)`,
+
+      achievements: `Achievements:
+  - Certified: 5 Million Ethiopian Coders Programme
+  - Hackathon Participant`,
+
+      contact: `Contact me:
+  - 📧 Gmail: sinonafteshome@gmail.com
+  - 💬 Telegram: @Sinonafteshe
+  - 📱 WhatsApp: +251913673265
+  - 📞 Call: +251913673265`,
+
+      gui: "GUI"
+    };
+
+    function newLine(text = "", isPrompt = false, cmdTyped = "") {
+      const line = document.createElement("div");
+      line.classList.add("line");
+
+      if (isPrompt) {
+        line.innerHTML = `<span class="prompt">sinonaf@portfolio:~$ </span><input type="text" autofocus />`;
+      } else if (cmdTyped) {
+        // ✅ Keep the typed case but color blue only if valid
+        const isValid = commands[cmdTyped.toLowerCase()];
+        line.innerHTML = `<span class="prompt">sinonaf@portfolio:~$ </span><span class="${isValid ? 'cmd' : 'output'}">${cmdTyped}</span>`;
+      } else {
+        line.innerHTML = `<span class="output">${text}</span>`;
+      }
+
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+
+      if (isPrompt) {
+        const input = line.querySelector("input");
+        input.focus();
+
+        // ✅ Real-time command highlighting (case-insensitive)
+        input.addEventListener("input", function() {
+          const typed = input.value.trim();
+          const lower = typed.toLowerCase();
+          if (commands[lower]) {
+            input.style.color = "#268bd2"; // valid -> blue
+          } else {
+            input.style.color = "#fff"; // invalid -> white
+          }
+        });
+
+        input.addEventListener("keydown", function(e) {
+          if (e.key === "Enter") {
+            const typed = input.value.trim();
+            const lower = typed.toLowerCase(); // normalize
+            input.remove();
+            newLine("", false, typed); // show typed case
+            processCommand(lower);
+            newLine("", true);
+          }
+        });
+      }
+    }
+
+    function processCommand(cmd) {
+      if (cmd === "") return;
+      if (commands[cmd]) {
+        if (cmd === "clear") {
+          terminal.innerHTML = "";
+        } else if (cmd === "about") {
+          const img = document.createElement("img");
+          img.src = "https://lh3.googleusercontent.com/a/ACg8ocLC3wiAC9ik-1RxYOrL4jHSoh9acS73pT2fPDfPEkxmxFwZNPs=s96-c"; // <-- replace with your profile picture
+          img.className = "profile";
+          terminal.appendChild(img);
+          newLine(commands[cmd]);
+        } else if (cmd === "gui") {
+          window.location.href = "portfolio.html"; // <-- replace with your GUI link
+        } else {
+          newLine(commands[cmd]);
+        }
+      } else {
+        newLine(`Command not found: ${cmd}. Type 'help' for available commands.`);
+        newLine(commands.help);
+      }
+    }
+
+    // Start terminal
+    newLine("Welcome to Sinonaf's Ubuntu-style Portfolio Terminal!");
+    newLine("Type 'help' to get started.\n");
+    newLine("", true);
+  </script>
+</body>
+</html>
